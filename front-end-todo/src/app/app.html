@@ -1,0 +1,44 @@
+<nav class="navbar navbar-dark bg-dark">
+  <a class="navbar-brand"> Todo App</a>
+</nav>
+
+<div class="container mt-4">
+    <h3>Todos</h3>
+    <hr />
+    <form [formGroup]="form" (ngSubmit)="submit()"> <!-- Indica q esse é form chamado form que contém o description e indica que o método usado ao clicar no botão vai ser o submit e vai usar o método submit do back-end-->
+      <div class="row"> <!--Indicando que criei uma linha com 12 colunas-->
+        
+        <div class="col-md-6"> <!--Indicando que essa outra div dentro dela vai ocupar 6 colunas-->
+          <input type="text" class="form-control" formControlName="description"/>
+        </div>
+
+        <div class="col-md-2"> <!--Indicando que essa div vai ocupar 2 colunas seguindo a ordem-->
+          <button type="submit"  class="btn btn-primary" [disabled]="!form.get('description')?.valid">Add</button>
+        </div>  
+
+      </div>
+  </form>
+  <hr />
+  <div class="row"> <!--Indica q essa div é uma linha dentro da div container em q ela está inserida-->
+    <div class="col-md-7"> <!-- Indica que essa nova linha vai ocupar 7 colunas-->
+
+      <ul class="list-group">
+        <!-- ngfor dentro do li, vai criar um li para cada objeto todoObject que tiver no array de todosObjects--> 
+        <!--*ngFor="let todoObject of todosObjects": percorre cada item da lista todosObjects e cria uma variável todoObject para conter os items-->
+        <li *ngFor="let todoObject of todosObjects" 
+            class="list-group-item d-flex justify-content-between align-items-center">
+            <span class="{{ todoObject.done ? 'done' : '' }}">
+              {{ todoObject.description }} {{ todoObject.doneDate }}
+            </span>
+
+            <div class="btn-group">
+              <button class="btn btn success" [disabled]="todoObject.done" (click)="done(todoObject)">Done</button>
+              <button class="btn btn danger" (click)="delete(todoObject)">Delete</button>
+            </div>
+        </li>
+
+      </ul>
+    </div> 
+
+  </div>
+</div>
